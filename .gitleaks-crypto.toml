@@ -1,0 +1,77 @@
+title = "Comprehensive Crypto Private Key Detection"
+
+[allowlist]
+description = "Global allowlist for hash/lock files"
+paths = [
+  '''Cargo\.lock''',
+  '''package-lock\.json''',
+  '''yarn\.lock''',
+  '''poetry\.lock''',
+  '''Gemfile\.lock''',
+  '''composer\.lock''',
+  '''\.min\.js$''',
+  '''\.map$''',
+  '''vendor/''',
+  '''node_modules/''',
+]
+
+[[rules]]
+id = "bitcoin-wif-private-key"
+description = "Bitcoin WIF Private Key (mainnet)"
+regex = '''\b([5KL][1-9A-HJ-NP-Za-km-z]{50,51})\b'''
+secretGroup = 1
+tags = ["crypto", "bitcoin", "private-key"]
+
+[[rules]]
+id = "bitcoin-wif-testnet"
+description = "Bitcoin WIF Private Key (testnet)"
+regex = '''\b([9c][1-9A-HJ-NP-Za-km-z]{50,51})\b'''
+secretGroup = 1
+tags = ["crypto", "bitcoin", "private-key", "testnet"]
+
+[[rules]]
+id = "bitcoin-xprv"
+description = "Bitcoin Extended Private Key (xprv)"
+regex = '''\b(xprv[1-9A-HJ-NP-Za-km-z]{100,120})\b'''
+secretGroup = 1
+tags = ["crypto", "bitcoin", "bip32", "private-key"]
+
+[[rules]]
+id = "bitcoin-yprv"
+description = "Bitcoin Extended Private Key (yprv)"
+regex = '''\b(yprv[1-9A-HJ-NP-Za-km-z]{100,120})\b'''
+secretGroup = 1
+tags = ["crypto", "bitcoin", "bip32", "private-key"]
+
+[[rules]]
+id = "bitcoin-zprv"
+description = "Bitcoin Extended Private Key (zprv)"
+regex = '''\b(zprv[1-9A-HJ-NP-Za-km-z]{100,120})\b'''
+secretGroup = 1
+tags = ["crypto", "bitcoin", "bip32", "private-key"]
+
+[[rules]]
+id = "ethereum-private-key"
+description = "Ethereum Private Key with context"
+regex = '''(?i)(?:private[_\s-]?key|privkey|eth[_\s-]?key|wallet[_\s-]?key|secret[_\s-]?key)["\s:=]+(?:0x)?([a-fA-F0-9]{64})\b'''
+secretGroup = 1
+entropy = 3.5
+keywords = ["private", "privkey", "eth", "wallet", "secret"]
+tags = ["crypto", "ethereum", "private-key"]
+
+[[rules]]
+id = "solana-private-key"
+description = "Solana Private Key (base58)"
+regex = '''\b([1-9A-HJ-NP-Za-km-z]{87,88})\b'''
+secretGroup = 1
+entropy = 4.5
+tags = ["crypto", "solana", "private-key"]
+
+[[rules]]
+id = "monero-private-spend-key"
+description = "Monero Private Spend Key with context"
+regex = '''(?i)(?:spend[_\s-]?key|monero[_\s-]?key|xmr[_\s-]?key)["\s:=]+([a-fA-F0-9]{64})\b'''
+secretGroup = 1
+entropy = 3.5
+keywords = ["spend", "monero", "xmr"]
+tags = ["crypto", "monero", "private-key"]
